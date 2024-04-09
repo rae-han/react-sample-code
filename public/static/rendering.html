@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+
+  <ul>
+    <li>Sync Code: <button id="sync">0</button></li>
+    <li>Macro Task Queue: <button id="macrotask">0</button></li>
+    <li>Micro Task Queue: <button id="microtask">0</button></li>
+  </ul>
+
+  <button id="macro_micro">동시 실행</button>
+</body>
+<script>
+  const sync = document.getElementById('sync');
+  const macrotask = document.getElementById('macrotask');
+  const microtask = document.getElementById('microtask');
+  const macro_micro = document.getElementById('macro_micro');
+
+  sync.addEventListener('click', () => {
+    for (let i = 0; i < 100000; i++) {
+      sync.textContent = i
+    }
+  });
+
+  macrotask.addEventListener('click', () => {
+    for (let i = 0; i < 100000; i++) {
+      setTimeout(() => {
+        macrotask.textContent = i;
+      }, 0);
+    }
+  });
+
+  microtask.addEventListener('click', () => {
+    for (let i = 0; i < 100000; i++) {
+      queueMicrotask(() => {
+        microtask.textContent = i;
+      });
+    }
+  });
+
+  macro_micro.addEventListener('click', () => {
+    for (let i = 0; i < 100000; i++) {
+      setTimeout(() => {
+        macrotask.textContent = i;
+      }, 0);
+
+      queueMicrotask(() => {
+        microtask.textContent = i;
+      });
+    }
+  });
+</script>
+</html>
