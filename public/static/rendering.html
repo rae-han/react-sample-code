@@ -56,5 +56,19 @@
       });
     }
   });
+
+  console.log('A');
+
+  setTimeout(() => {
+    console.log('B');
+  }, 0);
+
+  Promise.resolve().then(() => {
+    console.log('C');
+  });
+
+  window.requestAnimationFrame(() => {
+    console.log('D');
+  });
 </script>
 </html>
